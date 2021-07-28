@@ -14,38 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package source.syntax;
 
-public class IndexedAccessInStaticScope {
+import org.jsweet.test.transpiler.AbstractTest;
+import org.junit.Test;
 
-	static {
-//		$get("a");
-//		$set("a", "value");
-//		jsweet.util.Globals.$get("a");
-//		jsweet.util.Globals.$set("a", "value");
-	}
-	
-	public static void m() {
-//		$get("a");
-//		$set("a", "value");
-//		jsweet.util.Globals.$get("a");
-//		jsweet.util.Globals.$set("a", "value");
-//		
-//		$set("c", "i want to be deleted");
-//		$delete("c");
-	}
-	
-	public static void main(String[] args) {
-//		m();
-//		$export("out_a", $get("a"));
-//		$export("out_b", $get("b"));
-//		$export("out_c", $get("c"));
-	}
-	
-}
+public class NoPackageTests extends AbstractTest {
 
-class C {
-	public static void m() {
-//		$set("b", "value");
+	@Test
+	public void testNoPackageClass() {
+		eval((logHandler, r) -> {
+			logHandler.assertNoProblems();
+		}, getSourceFile(NoPackageClass.class));
 	}
 }
