@@ -2,6 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>org.jsweet</groupId>
 	<artifactId>jsweet-transpiler</artifactId>
 	<version>2.3.10</version>
@@ -40,24 +41,19 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version.release>11</java.version.release>
+		<java.version>1.${java.version.release}</java.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 	<repositories>
 		<repository>
-			<id>jsweet-central</id>
-			<name>libs-release</name>
-			<url>http://repository.jsweet.org/artifactory/libs-release-local</url>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<snapshots />
-			<id>jsweet-snapshots</id>
-			<name>libs-snapshot</name>
-			<url>http://repository.jsweet.org/artifactory/libs-snapshot-local</url>
-		</repository>
-		<repository>
-			<id>jsweet-external</id>
-			<name>libs-release</name>
-			<url>http://repository.jsweet.org/artifactory/ext-release-local</url>
-		</repository>
+            <id>ktbyte-repo</id>
+            <url>https://mavenrepo.ktbyte.com/</url>
+        </repository>
 	</repositories>
 	<build>
 		<resources>
@@ -171,13 +167,7 @@
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.6</version>
 				<configuration>
-					<skip>${skipSigning}</skip>
-
-					<!-- This is necessary for gpg to not try to use the pinentry programs -->
-					<gpgArguments>
-						<arg>--pinentry-mode</arg>
-						<arg>loopback</arg>
-					</gpgArguments>
+					<skip>true</skip>
 				</configuration>
 				<executions>
 					<execution>
@@ -247,6 +237,22 @@
 			<artifactId>typescript.java-ts.core</artifactId>
 			<version>1.4.0.1</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.github.FlySkyPie</groupId>
+			<artifactId>jsweet-typescript.java-ts.core</artifactId>
+			<version>2.0.4</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.github.FlySkyPie</groupId>
+			<artifactId>jsweet-sourcemap-builder</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.3.0</version>
+			<scope>compile</scope>
+		</dependency>
 
 		<!-- Compile-time only dependency (JSweet looks up installed JDK at runtime
 			to conform to legal obligations) -->
@@ -254,23 +260,17 @@
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
 			<version>8</version>
-			<scope>provided</scope>
+			<scope>system</scope>
+			<systemPath>${java.home}/../lib/tools.jar</systemPath>
 		</dependency>
 		<!-- Test-only dependencies for testing candies -->
 		<dependency>
-			<groupId>org.jsweet</groupId>
-			<artifactId>jsweet-core</artifactId>
-			<version>6.1.0</version>
-			<scope>test</scope>
-			<optional>true</optional>
+			<groupId>com.github.FlySkyPie</groupId>
+			<artifactId>jsweet-core-es6</artifactId>
+			<version>6.3.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jsweet</groupId>
-			<artifactId>j4ts</artifactId>
-			<version>0.6.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
+
+		<!-- <dependency>
 			<groupId>org.jsweet.candies</groupId>
 			<artifactId>jquery</artifactId>
 			<version>1.10.0-20170726</version>
@@ -346,7 +346,8 @@
 			<version>75-20171101</version>
 			<scope>test</scope>
 			<optional>true</optional>
-		</dependency>
+		</dependency> -->
+
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
@@ -360,16 +361,4 @@
 		<name>JSweet</name>
 		<url>http://www.jsweet.org</url>
 	</organization>
-	<distributionManagement>
-		<repository>
-			<id>jsweet-release</id>
-			<name>libs-release</name>
-			<url>http://repository.jsweet.org/artifactory/libs-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>jsweet-snapshots</id>
-			<name>libs-snapshot</name>
-			<url>http://repository.jsweet.org/artifactory/libs-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
